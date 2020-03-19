@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -24,9 +25,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import static android.text.Html.fromHtml;
-import static com.example.project_android.WifiStateChangeReceiver.IS_NETWORK_AVAILABLE;
+
 
 public class MainActivity extends AppCompatActivity {
+    WifiStateChangeReceiver wifiStateChangeReceiver = new WifiStateChangeReceiver();
     private TextView EmailText;
     private  TextView PasswordText;
     private  Button Loginbtn;
@@ -51,18 +53,6 @@ public class MainActivity extends AppCompatActivity {
         Loginbtn = findViewById(R.id.loginButton);
         sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
 
-        IntentFilter intentFilter = new IntentFilter(WifiStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
-                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
-
-                Snackbar.make(findViewById(R.id.activity_main), "Network Status: " +networkStatus, Snackbar.LENGTH_LONG).show();
-            }
-        }, intentFilter);
-
-
         Loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +74,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(wifiStateChangeReceiver,filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(wifiStateChangeReceiver);
     }
 
     private void initCreateAccountTextView() {
