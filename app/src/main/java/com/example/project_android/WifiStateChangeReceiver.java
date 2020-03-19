@@ -18,6 +18,7 @@ public class WifiStateChangeReceiver extends BroadcastReceiver {
         Intent networkStateIntent = new Intent(NETWORK_AVAILABLE_ACTION);
         networkStateIntent.putExtra(IS_NETWORK_AVAILABLE, isConnectedToInternet(context));
         LocalBroadcastManager.getInstance(context).sendBroadcast(networkStateIntent);
+
     }
 
     private boolean isConnectedToInternet(Context context) {
