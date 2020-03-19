@@ -3,8 +3,12 @@ package com.example.project_android;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
@@ -16,9 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import static android.text.Html.fromHtml;
+import static com.example.project_android.WifiStateChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class MainActivity extends AppCompatActivity {
     private TextView EmailText;
@@ -44,6 +50,18 @@ public class MainActivity extends AppCompatActivity {
         PasswordText = findViewById(R.id.passwordText);
         Loginbtn = findViewById(R.id.loginButton);
         sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+
+        IntentFilter intentFilter = new IntentFilter(WifiStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
+                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
+
+                Snackbar.make(findViewById(R.id.activity_main), "Network Status: " +networkStatus, Snackbar.LENGTH_LONG).show();
+            }
+        }, intentFilter);
+
 
         Loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
