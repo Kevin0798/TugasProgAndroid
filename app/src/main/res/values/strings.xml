@@ -18,4 +18,6 @@
     <string name="username">Username</string>
 
     <string name="password">Password</string>
+    <string name="cancel_job">Cancel Job</string>
+    <string name="start_job">Start Job</string>
 </resources>
