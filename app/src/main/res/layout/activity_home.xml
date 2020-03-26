@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity2"
-    android:layout_height="match_parent">
+    tools:context=".HomeActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,69 +13,39 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnTap1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:onClick="loadFragment1"
             android:text="@string/fragment_1"
             android:textColor="#FFFFFF"
+            android:layout_marginEnd="1dp"
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnTab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:onClick="loadFragment2"
+            android:onClick="loadFragment1"
             android:text="@string/fragment_2"
             android:textColor="#FFFFFF"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/mainFrag"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_height="450dp"
         android:layout_gravity="top">
 
-    </FrameLayout>
-
-<!--    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:ignore="UselessParent">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="105dp"
-                android:text="@string/start_job"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel_job"
-                tools:ignore="ButtonStyle" />
-
-        </LinearLayout>
-
-    </LinearLayout>-->
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

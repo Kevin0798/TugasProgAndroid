@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="c_plus_plus" />
+    <drawable name="FF_satu" />
+    <drawable name="FF_dua" />
+    <drawable name="Fast_one" />
+    <drawable name="Fast_two" />
+    <drawable name="Fast_tree" />
+    <drawable name="Fast_four" />
+</resources>

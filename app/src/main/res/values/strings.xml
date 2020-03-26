@@ -3,7 +3,19 @@
     <string name="not_a_member_sign_in_now">Not a Member ? Sign in now.</string>
     <string name="login">Login</string>
 
+    <string-array name="movies_list">
+        <item>Fast And Furious 1</item>
+        <item>Fast And Furious 2</item>
+        <item>Fast And Furious 3</item>
+        <item>Fast And_Furious 4</item>
+    </string-array>
 
+    <string-array name="movies_description">
+        <item>Film balapan</item>
+        <item>Film balapan</item>
+        <item>Film balapan</item>
+        <item>Film balapan</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -20,4 +32,9 @@
     <string name="password">Password</string>
     <string name="cancel_job">Cancel Job</string>
     <string name="start_job">Start Job</string>
+    <string name="tab_1">Tab 1</string>
+    <string name="tab_2">Tab 2</string>
+    <string name="judul">Judul</string>
+    <string name="deskripsi">Deskripsi</string>
+
 </resources>

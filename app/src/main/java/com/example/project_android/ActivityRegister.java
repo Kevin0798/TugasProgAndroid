@@ -1,19 +1,14 @@
 package com.example.project_android;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputLayout;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ActivityRegister extends AppCompatActivity {
     EditText userName;
@@ -70,19 +65,18 @@ public class ActivityRegister extends AppCompatActivity {
     public boolean validate() {
         boolean valid = false;
 
-        String UserName = userName.getText().toString();
+        String Username = userName.getText().toString();
         String email = userEmail.getText().toString();
         String Password = passUser.getText().toString();
 
-        if (UserName.isEmpty()) {
+        if (Username.isEmpty()) {
             valid = true;
             Toast.makeText(getApplicationContext(), "Username salah", Toast.LENGTH_SHORT).show();
         } else {
-            if (UserName.length() > 5) {
+            if (Username.length() > 5) {
                 valid = true;
                 //textInputLayoutUserName.setError(null);
             } else {
-                valid = false;
                 Toast.makeText(getApplicationContext(), "Username Terlalu pendek", Toast.LENGTH_SHORT).show();
             }
         }

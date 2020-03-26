@@ -1,16 +1,8 @@
 package com.example.project_android;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -18,24 +10,23 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.text.Html.fromHtml;
-import static android.widget.Toast.*;
-import static com.example.project_android.MainActivity2.INTERVAL;
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,8 +42,13 @@ public class MainActivity extends AppCompatActivity {
     public static final long INTERVAL = 3000;
     private Handler mHandler = new Handler();
     private static final String TAG = MainActivity.class.getSimpleName();
-
     SqliteHelper sqliteHelper;
+
+/*    String s1[];
+    String s2[];
+
+    int images[] = {R.drawable.past_one, R.drawable.past_two, R.drawable.past_one, R.drawable.past_two};*/
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -62,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
         sqliteHelper = new SqliteHelper(this);
         initCreateAccountTextView();
         //initViews();
-
-
         EmailText = findViewById(R.id.emailText);
         PasswordText = findViewById(R.id.passwordText);
         Loginbtn = findViewById(R.id.loginButton);
         sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        scheduleJob();
+/*        s1 = getResources().getStringArray(R.array.movies_list);
+        s2 = getResources().getStringArray(R.array.movies_description);*/
+
+        //scheduleJob();
         Loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

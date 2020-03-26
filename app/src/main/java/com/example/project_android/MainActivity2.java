@@ -1,25 +1,22 @@
 package com.example.project_android;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Objects;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity2 extends AppCompatActivity {
     SharedPreferences pref;
@@ -27,46 +24,61 @@ public class MainActivity2 extends AppCompatActivity {
     private Timer timer = null;
     public static final long INTERVAL = 3000;
     private Handler mHandler = new Handler();
+    RecyclerView recyclerView;
+
+    String s1[];
+    String s2[];
+
+    int images[] = {R.drawable.past_one, R.drawable.past_two, R.drawable.past_one, R.drawable.past_two};
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        s1 = getResources().getStringArray(R.array.movies_list);
+        s2 = getResources().getStringArray(R.array.movies_description);
+        recyclerView = findViewById(R.id.recycleView);
         pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
+        MyAdapter myAdapter = new MyAdapter(this, s1, s2, images);
 
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        SharedPreferences.Editor editor = pref.edit();
         editor.putString("KEY1", "Test Shared Preferences");
         editor.apply();
-
         Log.i("Test SHared Preferences", Objects.requireNonNull(pref.getString("KEY1", null)));
         editor.remove("KEY1");
         editor.commit();
 
     }
 
-    public void loadFragment1 (View view){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag("fragOne");
+    public void loadFragment1(View v) {
 
-        if (fragment == null){
-            fragment = new Fragment1();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment fragment1 = fragmentManager.findFragmentByTag("fragOne");
+
+        if (fragment1 == null) {
+            fragment1 = new Fragment1();
         }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.mainFrag, fragment, "fragOne");
+        transaction.replace(R.id.mainFrag, fragment1, "fragOne");
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public void loadFragment2(View view){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment2 = fragmentManager.findFragmentByTag("fragOne");
+    public void loadFragment2(View v) {
 
-        if (fragment2 == null){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment fragment2 = fragmentManager.findFragmentByTag("fragTwo");
+
+        if (fragment2 == null) {
             fragment2 = new Fragment2();
         }
-
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.mainFrag, fragment2, "fragTwo");
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
