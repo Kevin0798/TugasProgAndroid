@@ -21,6 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity2" />
+        <activity android:name=".SynopsisActivity" />
+
         <service android:name=".MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 

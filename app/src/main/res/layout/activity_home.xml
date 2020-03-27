@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".MainActivity2">
 
-
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@android:color/black"
+        >
 
-        <Button
-            android:id="@+id/btnTap1"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:onClick="loadFragment1"
-            android:text="@string/fragment_1"
-            android:textColor="#FFFFFF"
-            android:layout_marginEnd="1dp"
-            tools:ignore="ButtonStyle" />
+            android:id="@+id/homeList"
+            android:text="Movies "
+            />
 
-        <Button
-            android:id="@+id/btnTab2"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:onClick="loadFragment1"
-            android:text="@string/fragment_2"
-            android:textColor="#FFFFFF"
-            tools:ignore="ButtonStyle" />
+            android:id="@+id/movieList"
+            android:text="Home"
+            />
 
-    </LinearLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chatList"
+            android:text="Chat"
+            />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_gravity="top">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

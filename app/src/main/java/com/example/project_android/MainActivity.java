@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity(){
 
-        Intent intent = new Intent(this, MainActivity2.class);
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
         startActivity(intent);
     }
 

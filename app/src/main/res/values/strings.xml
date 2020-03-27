@@ -1,21 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Project_Android</string>
     <string name="not_a_member_sign_in_now">Not a Member ? Sign in now.</string>
     <string name="login">Login</string>
 
-    <string-array name="movies_list">
-        <item>Fast And Furious 1</item>
-        <item>Fast And Furious 2</item>
-        <item>Fast And Furious 3</item>
-        <item>Fast And_Furious 4</item>
-    </string-array>
-
-    <string-array name="movies_description">
-        <item>Film balapan</item>
-        <item>Film balapan</item>
-        <item>Film balapan</item>
-        <item>Film balapan</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -36,5 +23,26 @@
     <string name="tab_2">Tab 2</string>
     <string name="judul">Judul</string>
     <string name="deskripsi">Deskripsi</string>
+    <string name="fragment_3">Fragment 3</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="todo">TODO</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="textview">TextView</string>
 
+
+
+    <string-array name="movies">
+        <item>Fast And Furious 1</item>
+        <item>Fast And Furious 2</item>
+        <item>Fast And Furious 3</item>
+        <item>Fast And_Furious 4</item>
+    </string-array>
+
+    <string-array name="m_description">
+        <item>Film balapan</item>
+        <item>Film balapan</item>
+        <item>Film balapan</item>
+        <item>Film balapan</item>
+    </string-array>
 </resources>

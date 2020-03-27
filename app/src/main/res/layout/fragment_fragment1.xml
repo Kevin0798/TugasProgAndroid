@@ -6,12 +6,11 @@
     android:orientation="vertical"
     tools:context=".Fragment1">
 
-
-    <TextView
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/fragment_1"
-        android:textSize="20sp"/>
+        tools:listitem="@layout/my_movies"/>
 
 </LinearLayout>

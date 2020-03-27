@@ -4,22 +4,25 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import java.util.Objects;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.Timer;
 
 public class MainActivity2 extends AppCompatActivity {
     SharedPreferences pref;
+    public PagesAdapter pagesAdapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private TabItem home;
+    private TabItem movies;
+    private TabItem chat;
     private static final String TAG = MainActivity2.class.getSimpleName();
     private Timer timer = null;
     public static final long INTERVAL = 3000;
@@ -36,55 +39,54 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        s1 = getResources().getStringArray(R.array.movies_list);
-        s2 = getResources().getStringArray(R.array.movies_description);
-        recyclerView = findViewById(R.id.recycleView);
-        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        MyAdapter myAdapter = new MyAdapter(this, s1, s2, images);
 
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        /*recyclerView = findViewById(R.id.recycleView);
+        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);*/
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        home = (TabItem) findViewById(R.id.homeList);
+        movies = (TabItem) findViewById(R.id.movieList);
+        chat = (TabItem) findViewById(R.id.chatList);
+        viewPager = findViewById(R.id.viewpager);
 
-        SharedPreferences.Editor editor = pref.edit();
+        pagesAdapter = new PagesAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagesAdapter);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if(tab.getPosition() == 0) {
+                    pagesAdapter.notifyDataSetChanged();
+                }else if(tab.getPosition() == 1) {
+                    pagesAdapter.notifyDataSetChanged();
+                }else if(tab.getPosition() == 2){
+                    pagesAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        recyclerView = null;
+        s1 = getResources().getStringArray(R.array.movies);
+        s2 = getResources().getStringArray(R.array.m_description);
+
+        /*SharedPreferences.Editor editor = pref.edit();
         editor.putString("KEY1", "Test Shared Preferences");
         editor.apply();
         Log.i("Test SHared Preferences", Objects.requireNonNull(pref.getString("KEY1", null)));
         editor.remove("KEY1");
-        editor.commit();
+        editor.commit();*/
 
     }
 
-    public void loadFragment1(View v) {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        Fragment fragment1 = fragmentManager.findFragmentByTag("fragOne");
-
-        if (fragment1 == null) {
-            fragment1 = new Fragment1();
-        }
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.mainFrag, fragment1, "fragOne");
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    public void loadFragment2(View v) {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        Fragment fragment2 = fragmentManager.findFragmentByTag("fragTwo");
-
-        if (fragment2 == null) {
-            fragment2 = new Fragment2();
-        }
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.mainFrag, fragment2, "fragTwo");
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
 /*    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void scheduleJob(View view){
