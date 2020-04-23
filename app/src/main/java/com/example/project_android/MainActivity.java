@@ -14,11 +14,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler mHandler = new Handler();
     private static final String TAG = MainActivity.class.getSimpleName();
     SqliteHelper sqliteHelper;
-
+    private FirebaseFirestore firebaseFirestoreDb;
+    FirebaseAuth firebaseAuth;
 /*    String s1[];
     String s2[];
 
@@ -58,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         sqliteHelper = new SqliteHelper(this);
         initCreateAccountTextView();
         //initViews();
+        firebaseFirestoreDb = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         EmailText = findViewById(R.id.emailText);
         PasswordText = findViewById(R.id.passwordText);
         Loginbtn = findViewById(R.id.loginButton);
@@ -67,6 +77,37 @@ public class MainActivity extends AppCompatActivity {
 
         //scheduleJob();
         Loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mail = EmailText.getText().toString().trim();
+                String pass = PasswordText.getText().toString().trim();
+
+                if (mail.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Email is required", LENGTH_SHORT).show();
+                }
+                if (pass.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Passwrod is required", LENGTH_SHORT).show();
+                }
+                if (pass.length() < 6){
+                    Toast.makeText(MainActivity.this, "Passwrod harus >= 6", LENGTH_SHORT).show();
+                }
+
+                firebaseAuth.signInWithEmailAndPassword(mail,pass)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    startActivity(new Intent(getApplicationContext(), MainActivity2.class));
+                                }else{
+                                    Toast.makeText(MainActivity.this, "Error", LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+            }
+        });
+
+ /*       Loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validate()) {
@@ -84,11 +125,17 @@ public class MainActivity extends AppCompatActivity {
                         makeText(getApplicationContext(), "Login Gagal", LENGTH_SHORT).show();
 
                     }
+                    firebaseFirestoreDb.
                 }
+
             }
-        });
+        });*/
     }
 
+
+    private void loginActivity(){
+
+    }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void scheduleJob() {
         ComponentName componentName = new ComponentName(this, MyJobService.class);
