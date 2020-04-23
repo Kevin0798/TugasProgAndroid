@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Passwrod is required", LENGTH_SHORT).show();
                 }
                 if (pass.length() < 6){
-                    Toast.makeText(MainActivity.this, "Passwrod harus >= 6", LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Password harus >= 6", LENGTH_SHORT).show();
                 }
 
                 firebaseAuth.signInWithEmailAndPassword(mail,pass)
