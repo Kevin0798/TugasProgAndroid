@@ -1,5 +1,6 @@
 package com.example.project_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -12,9 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class ActivityRegister extends AppCompatActivity {
     EditText userName;
@@ -29,7 +38,7 @@ public class ActivityRegister extends AppCompatActivity {
 
     Button btnRegister;
     private FirebaseFirestore firebaseFirestoreDb;
-
+    FirebaseAuth firebaseAuth;
 
     SqliteHelper sqliteHelper;
 
@@ -40,12 +49,50 @@ public class ActivityRegister extends AppCompatActivity {
         firebaseFirestoreDb = FirebaseFirestore.getInstance();
         sqliteHelper = new SqliteHelper(this);
         btnRegister = findViewById(R.id.buttonRegister);
-
+        firebaseAuth = FirebaseAuth.getInstance();
         usrName = findViewById(R.id.userName);
         usrEmail = findViewById(R.id.userEmail);
         pssWord = findViewById(R.id.passUser);
 
+        /*if (firebaseAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }*/
         btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String regisName = usrName.getText().toString().trim();
+                String regisMail = usrEmail.getText().toString().trim();
+                String regisPassword = pssWord.getText().toString().trim();
+
+                if (regisName.isEmpty()){
+                    Toast.makeText(ActivityRegister.this, "Username is required", LENGTH_SHORT).show();
+                }
+                if (regisMail.isEmpty()){
+                    Toast.makeText(ActivityRegister.this, "Email is required", LENGTH_SHORT).show();
+                }
+                if (regisPassword.isEmpty()){
+                    Toast.makeText(ActivityRegister.this, "Passwrod is required", LENGTH_SHORT).show();
+                }
+                if (regisPassword.length() < 6){
+                    Toast.makeText(ActivityRegister.this, "Password harus >= 6", LENGTH_SHORT).show();
+                }
+
+                firebaseAuth.createUserWithEmailAndPassword(regisMail,regisPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(ActivityRegister.this,"User Created", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }else{
+                            Toast.makeText(ActivityRegister.this,"Error "+ Objects.requireNonNull(task.getException()).getMessage(), LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+/*        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!usrName.getText().toString().isEmpty() && !usrEmail.getText().toString().isEmpty() && !pssWord.getText().toString().isEmpty()){
@@ -54,7 +101,7 @@ public class ActivityRegister extends AppCompatActivity {
                     Toast.makeText(ActivityRegister.this, "Semua kolom tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
         /*btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

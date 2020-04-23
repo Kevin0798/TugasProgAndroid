@@ -4,9 +4,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +29,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.text.Html.fromHtml;
-import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 
@@ -82,16 +79,18 @@ public class MainActivity extends AppCompatActivity {
                 String mail = EmailText.getText().toString().trim();
                 String pass = PasswordText.getText().toString().trim();
 
-                if (mail.isEmpty()){
+                if (mail.isEmpty() && !pass.isEmpty()){
                     Toast.makeText(MainActivity.this, "Email is required", LENGTH_SHORT).show();
                 }
-                if (pass.isEmpty()){
+                if (!mail.isEmpty() && pass.isEmpty()){
                     Toast.makeText(MainActivity.this, "Passwrod is required", LENGTH_SHORT).show();
+                }
+                if (mail.isEmpty() && pass.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Kolom tidak boleh kosong", LENGTH_SHORT).show();
                 }
                 if (pass.length() < 6){
                     Toast.makeText(MainActivity.this, "Password harus >= 6", LENGTH_SHORT).show();
                 }
-
                 firebaseAuth.signInWithEmailAndPassword(mail,pass)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     startActivity(new Intent(getApplicationContext(), MainActivity2.class));
                                 }else{
-                                    Toast.makeText(MainActivity.this, "Error", LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Error "+ task.getException().getMessage(), LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -160,18 +159,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+/*    @Override
     protected void onStart() {
         super.onStart();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(wifiStateChangeReceiver,filter);
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(wifiStateChangeReceiver);
-    }
+    }*/
 
     private void initCreateAccountTextView() {
         TextView textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
@@ -228,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    makeText(getApplicationContext(), "3 second", LENGTH_LONG).show();
+                    makeText(getApplicationContext(), "3 second", LENGTH_SHORT).show();
                 }
             });
         }
